@@ -7,10 +7,8 @@ const _ = require('lodash');
 const db = require('../database');
 const topics = require('../topics');
 const activitypub = require('../activitypub');
-const winston = require('winston');
 
 async function getCidByPid(Posts, pid) {
-	winston.info('Tor Taepaisitphongse [getCidByPid called]');
 	const tid = await Posts.getPostField(pid, 'tid');
 	if (!tid && activitypub.helpers.isUri(pid)) {
 		return -1; // fediverse pseudo-category
@@ -42,7 +40,6 @@ async function filterPidsByCid(Posts, pids, cid) {
 }
 
 module.exports = function (Posts) {
-	winston.info('Tor Taepaisitphongse [init]');
 	Posts.getCidByPid = pid => getCidByPid(Posts, pid);
 	Posts.getCidsByPids = pids => getCidsByPids(Posts, pids);
 	Posts.filterPidsByCid = async (pids, cid) => filterPidsByCid(Posts, pids, cid);
